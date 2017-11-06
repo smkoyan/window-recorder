@@ -25,49 +25,56 @@ const WindowRecorder = {
     },
 
     eventsHandlers: {
-        'mousemove': function (eventData) {
+        'mousemove': function (event) {
             this.eventsDataBuffer.push({
                 timestamp: Date.now(),
-                type: eventData.type,
+                type: event.type,
                 x: event.clientX,
                 y: event.clientY,
             });
         },
 
-        'click': function (eventData) {
+        'click': function (event) {
             this.eventsDataBuffer.push({
                 timestamp: Date.now(),
-                type: eventData.type,
+                type: event.type,
             });
         },
 
-        'scroll': function (eventData) {
+        'scroll': function (event) {
             this.eventsDataBuffer.push({
                 timestamp: Date.now(),
-                type: eventData.type,
-                scrollTop: eventData.pageYOffset
+                type: event.type,
+                scrollTop: event.pageYOffset
             });
         },
 
-        'input': function (eventData) {
-            this.eventsDataBuffer.push({
+        'input': function (event) {
+            const eventData = {
                 timestamp: Date.now(),
-                type: eventData.type,
-                inputType: eventData.inputType,
-                data: eventData.data
-            });
+                type: event.type,
+                inputType: event.inputType,
+            };
+
+            if (event.type === 'password') {
+                eventData.valueLength = event.target.value.length;
+            } else {
+                eventData.value = event.target.value;
+            }
+
+            this.eventsDataBuffer.push(eventData);
         },
 
-        'focus': function (eventData) {
+        'focus': function (event) {
             this.eventsDataBuffer.push({
                 timestamp: Date.now(),
-                type: eventData.type
+                type: event.type
             });
         }
     },
 
-    saveEventData: function (eventData) {
-        this.eventsHandlers[event.type].call(this, eventData);
+    saveEventData: function (event) {
+        this.eventsHandlers[event.type].call(this, event);
     }
 };
 
@@ -75,10 +82,8 @@ const WindowRecorder = {
 WindowRecorder.init();
 
 
-/*
-// Player testing
+/*// Player testing
 setTimeout(function () {
-    Player.init({eventsData: WindowRecorder.eventsDataBuffer, mousePointer: document.getElementById('mousePointer')})
+    Player.init({eventsData: WindowRecorder.eventsDataBuffer, mousePointer: document.getElementById('mousePointer')});
     Player.play();
-}, 20000);
-*/
+}, 20000);*/

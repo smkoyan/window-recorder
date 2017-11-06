@@ -3,9 +3,13 @@ const Player = {
 
     mousePointer: null,
 
-    windowHeight: null,
+    /*playerWindowHeight: null,
 
-    windowWidth: null,
+    playerWindowWidth: null,
+
+    originalWindowWidth: null,
+
+    originalWindowHeight: null,*/
 
     lastX: null,
 
@@ -20,6 +24,7 @@ const Player = {
 
     play: function () {
         this.runEvent();
+
     },
 
     eventsHandlers: {
@@ -57,13 +62,13 @@ const Player = {
             switch (eventData.inputType) {
                 case 'insertText':
                     if (_this.lastFocusedInput.type === 'password') {
-                        _this.lastFocusedInput.value += '*';
+                        _this.lastFocusedInput.value = '*'.repeat(eventData.valueLength);
                     } else {
-                        _this.lastFocusedInput.value += eventData.data;
+                        _this.lastFocusedInput.value = eventData.value;
                     }
                     break;
                 case 'deleteContentBackward':
-                    _this.lastFocusedInput.value = _this.lastFocusedInput.value.slice(0, -2);
+                    _this.lastFocusedInput.value = eventData.value;
                     break;
             }
         }
@@ -71,7 +76,6 @@ const Player = {
 
     runEvent: function (eventNumber = 0) {
         const _this = this;
-
 
         const eventData = _this.eventsData[eventNumber];
         _this.eventsHandlers[eventData.type].call(_this, eventData);
