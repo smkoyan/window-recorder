@@ -17,7 +17,7 @@ const Player = {
 
     currentFocusedInput: null,
 
-    currentHoveredElement: null,
+    currentHoveredElements: [],
 
     elementsWithHover: null,
 
@@ -40,7 +40,7 @@ const Player = {
             const elements = document.querySelectorAll(selector);
 
             elements.forEach(function (element) {
-               elementsWithHover.add(element);
+                elementsWithHover.add(element);
             });
         });
 
@@ -65,21 +65,45 @@ const Player = {
 
     customEventsHandlers: {
         'hover': function (event) {
+            event.stopPropagation();
+
             const _this = this;
             _this.isHoverHandled = true;
 
             const currentTarget = event.currentTarget;
+            const currentHoveredElementsCount = _this.currentHoveredElements.length;
 
-            if (_this.currentHoveredElement === null) {
-                _this.currentHoveredElement = currentTarget;
+            let i = 0;
+            if (currentHoveredElementsCount === 0) {
+                // no hovered element
+                _this.currentHoveredElements.push(currentTarget);
             } else {
-                if (currentTarget === _this.currentHoveredElement) {
-                    return;
+                for (i = 0; i < currentHoveredElementsCount; i++) {
+                    if (_this.currentHoveredElements[i].contains(currentTarget)) {
+                        break;
+                    }
                 }
-                _this.currentHoveredElement.classList.remove('wr-hover');
-                _this.currentHoveredElement = currentTarget;
+
+                if (i < currentHoveredElementsCount) {
+                    if (currentTarget === _this.currentHoveredElements[0]) {
+                        // same element hovered
+                        return;
+                    }
+
+                    _this.currentHoveredElements.splice(0, i).forEach(function (element) {
+                        element.classList.remove('wr-hover');
+                    });
+                    _this.currentHoveredElements.unshift(currentTarget);
+                } else {
+                    // new element hovered
+                    _this.currentHoveredElements.forEach(function (element) {
+                        element.classList.remove('wr-hover');
+                    });
+
+                    _this.currentHoveredElements = [currentTarget];
+                }
             }
-            _this.currentHoveredElement.classList.add('wr-hover');
+            _this.currentHoveredElements[0].classList.add('wr-hover');
         }
     },
 
@@ -93,9 +117,11 @@ const Player = {
             target.dispatchEvent(_this.customEvents['hover']);
 
             if (!_this.isHoverHandled) {
-                if (_this.currentHoveredElement !== null) {
-                    _this.currentHoveredElement.classList.remove('wr-hover');
-                    _this.currentHoveredElement = null;
+                if (_this.currentHoveredElements.length !== 0) {
+                    _this.currentHoveredElements.forEach(function (element) {
+                        element.classList.remove('wr-hover');
+                    });
+                    _this.currentHoveredElements = [];
                 }
             }
 
