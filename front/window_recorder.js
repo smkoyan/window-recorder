@@ -56,7 +56,7 @@ const WindowRecorder = {
                 inputType: event.inputType,
             };
 
-            if (event.type === 'password') {
+            if (event.target.type === 'password') {
                 eventData.valueLength = event.target.value.length;
             } else {
                 eventData.value = event.target.value;
@@ -80,10 +80,3 @@ const WindowRecorder = {
 
 
 WindowRecorder.init();
-
-
-/*// Player testing
-setTimeout(function () {
-    Player.init({eventsData: WindowRecorder.eventsDataBuffer, mousePointer: document.getElementById('mousePointer')});
-    Player.play();
-}, 20000);*/

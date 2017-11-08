@@ -1,8 +1,10 @@
 .mouse-pointer {
     width: 15px;
     height: 15px;
-    position: absolute;
+    position: fixed;
+    z-index: 999999;
     top: 0;
     left: 0;
     background-color: green;
 }
+

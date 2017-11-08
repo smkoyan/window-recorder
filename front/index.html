@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Window Recorder</title>
-    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="stylesheet" href="../back/style.css" type="text/css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="window_recorder.js"></script>
 </head>
@@ -25,7 +25,7 @@
             transition: 0.4s;
         }
 
-        button.accordion.active, button.accordion:hover {
+        button.accordion.active, button.accordion:hover, button.accordion.wr-hover {
             background-color: #ccc;
         }
 
@@ -126,7 +126,8 @@
         }
     </script>
 </div>
-<script src="dom_compnents_parser.js"></script>
-<script src="player.js"></script>
+<script src="dom_components_parser.js"></script>
+<script src="../back/video_content_manager.js"></script>
+<script src="../back/player.js"></script>
 </body>
 </html>
