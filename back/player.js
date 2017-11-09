@@ -85,14 +85,15 @@ const Player = {
                 }
 
                 if (i < currentHoveredElementsCount) {
+                    _this.currentHoveredElements.splice(0, i).forEach(function (element) {
+                        element.classList.remove('wr-hover');
+                    });
+
                     if (currentTarget === _this.currentHoveredElements[0]) {
                         // same element hovered
                         return;
                     }
 
-                    _this.currentHoveredElements.splice(0, i).forEach(function (element) {
-                        element.classList.remove('wr-hover');
-                    });
                     _this.currentHoveredElements.unshift(currentTarget);
                 } else {
                     // new element hovered
