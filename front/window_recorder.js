@@ -45,7 +45,7 @@ const WindowRecorder = {
             this.eventsDataBuffer.push({
                 timestamp: Date.now(),
                 type: event.type,
-                scrollTop: event.pageYOffset
+                scrollTop: window.pageYOffset
             });
         },
 

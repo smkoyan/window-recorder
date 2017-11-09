@@ -5,18 +5,23 @@ const DomComponentsParser = {
 
     scripts: null,
 
+    images: null,
+
     parse: function () {
         return Promise.all([
             this.parseHTML(),
             this.parseStyleSheets(),
-            this.parseScripts()
+            this.parseScripts(),
+            this.parseImages()
         ]).then(function (domComponents) {
             return {
                 html: domComponents[0],
 
                 styleSheets: domComponents[1],
 
-                scripts: domComponents[2]
+                scripts: domComponents[2],
+
+                images: domComponents[3]
             };
         });
     },
@@ -75,6 +80,28 @@ const DomComponentsParser = {
             _this.scripts = scriptsContents;
 
             return scriptsContents;
+        });
+    },
+
+
+    parseImages: function () {
+        const _this = this;
+
+        const imagesContentsPromises = [];
+        const images = document.images;
+
+        for (let i = 0; i < images.length; i++) {
+            imagesContentsPromises.push(new Promise(function (resolve) {
+                $.get(images[i].currentSrc, function (imageContent) {
+                    resolve(imageContent);
+                }, 'text');
+            }));
+        }
+
+        return Promise.all(imagesContentsPromises).then(function (imagesContents) {
+            _this.images = imagesContents;
+
+            return imagesContents;
         });
     }
 };

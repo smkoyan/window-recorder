@@ -19,8 +19,6 @@ const Player = {
 
     currentHoveredElements: [],
 
-    elementsWithHover: null,
-
     isHoverHandled: false,
 
     init: function (options) {
@@ -49,7 +47,6 @@ const Player = {
             element.addEventListener('hover', onhover);
         });
 
-        _this.elementsWithHover = elementsWithHover;
     },
 
     play: function () {
@@ -174,7 +171,6 @@ const Player = {
         }
     }
 };
-
 
 DomComponentsParser.parse().then(function (domComponents) {
     VideoContentManager.init(domComponents);
