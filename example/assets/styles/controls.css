@@ -1,0 +1,52 @@
+.hidden {
+    visibility: hidden !important;
+}
+
+.controls {
+    position: fixed;
+    right: 0;
+    top: 0;
+    border: 1px solid black;
+    padding: 1rem;
+    margin: 6px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    z-index: 100;
+}
+
+
+.controls > .mouse-pointer {
+    width: 1rem;
+    height: 1rem;
+    background-color: #28a745;
+    border-radius: 1rem;
+}
+
+.controls > .mouse-pointer.active {
+    position: fixed;
+    display: inline-block;
+}
+
+.controls > .replay-btn {
+    font-weight: 400;
+    user-select: none;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    color: #28a745;
+    background-color: transparent;
+    border: 1px solid #28a745;
+    cursor: pointer;
+}
+
+.controls > .replay-btn:hover {
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.controls > .replay-btn:active {
+    box-shadow: 0 0 0 0.2rem rgb(40 167 69 / 50%);
+}

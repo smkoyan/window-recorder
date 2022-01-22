@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Window Recorder</title>
+    <link rel="stylesheet" href="assets/styles/controls.css" type="text/css">
+    <link rel="stylesheet" href="assets/styles/main.css" type="text/css">
+</head>
+
+<body>
+
+<div class="controls">
+    <div id="mousePointer" class="mouse-pointer"></div>
+    <button class="replay-btn">Replay</button>
+</div>
+
+
+<div class="test-content">
+    <p>Click on the buttons to open the collapsible content.</p>
+    <div id="box1">
+        <div id="box2">
+
+        </div>
+    </div>
+
+    <div class="dropdown">
+        <button class="dropbtn">Dropdown</button>
+        <div class="dropdown-content">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+        </div>
+    </div>
+
+    <form class="form">
+        <label>
+            username:
+            <input type="text" name="username">
+        </label>
+
+        <label>
+            password:
+            <input type="password" name="password">
+        </label>
+    </form>
+
+    <section>
+        <h2>Animated Accordion</h2>
+        <button class="accordion">Section 1</button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+                ea commodo consequat.</p>
+        </div>
+
+        <button class="accordion">Section 2</button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+                ea commodo consequat.</p>
+        </div>
+
+        <button class="accordion">Section 3</button>
+        <div class="panel">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
+                ea commodo consequat.</p>
+        </div>
+    </section>
+</div>
+
+<img src="assets/images/nature.jpeg" alt="picture of nature">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="assets/js/accordion.js"></script>
+
+<script src="../front/window_recorder.js"></script>
+<script src="../front/dom_components_parser.js"></script>
+<script src="../back/video_content_manager.js"></script>
+<script src="../back/player.js"></script>
+
+<script>
+    const mousePointer = document.querySelector('.controls .mouse-pointer');
+    const replayButton = document.querySelector('.controls .replay-btn');
+
+    WindowRecorder.init();
+
+    function play() {
+        mousePointer.classList.add('active');
+        replayButton.disabled = true;
+
+        Player.init({
+            eventsData: [...WindowRecorder.eventsDataBuffer],
+            mousePointer,
+        });
+        Player.play(function () {
+            mousePointer.classList.remove('active');
+            replayButton.disabled = false;
+        });
+    }
+
+    replayButton.onclick = play;
+</script>
+</body>
+</html>

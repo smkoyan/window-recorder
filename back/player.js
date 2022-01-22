@@ -21,6 +21,8 @@ const Player = {
 
     isHoverHandled: false,
 
+    onend: null,
+
     init: function (options) {
         this.eventsData = options.eventsData;
         this.mousePointer = options.mousePointer;
@@ -46,10 +48,10 @@ const Player = {
         elementsWithHover.forEach(function (element) {
             element.addEventListener('hover', onhover);
         });
-
     },
 
-    play: function () {
+    play: function (onend) {
+        this.onend = onend;
         this.runEvent();
     },
 
@@ -165,9 +167,14 @@ const Player = {
         _this.eventsHandlers[eventData.type].call(_this, eventData);
 
         if (_this.eventsData.length - 1 >= eventNumber + 1) {
+            const delay = _this.eventsData[eventNumber + 1].timestamp - eventData.timestamp;
+
             setTimeout(function () {
                 _this.runEvent(eventNumber + 1);
-            }, _this.eventsData[eventNumber + 1].timestamp - eventData.timestamp);
+            }, delay);
+        } else {
+            this.onend();
+            this.onend = null;
         }
     }
 };

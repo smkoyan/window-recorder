@@ -79,4 +79,4 @@ const WindowRecorder = {
 };
 
 
-WindowRecorder.init();
+
